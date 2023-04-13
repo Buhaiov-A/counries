@@ -1,3 +1,11 @@
+// HTTP-запросы
+// Используй публичный API Rest Countries, а именно ресурс name, возвращающий массив объектов стран
+// удовлетворивших критерий поиска. Добавь минимальное оформление элементов интерфейса.
+
+// Напиши функцию fetchCountries(name) которая делает HTTP-запрос на ресурс name и возвращает промис с
+// массивом стран - результатом запроса. Вынеси её в отдельный файл fetchCountries.js и сделай именованный
+// экспорт.
+
 const SEARCH_URL = 'https://restcountries.com/v3.1/name/';
 
 const searchParams = new URLSearchParams({
@@ -6,20 +14,14 @@ const searchParams = new URLSearchParams({
 
 export const fetchCountries = name => {
   return fetch(`${SEARCH_URL}${name}?${searchParams}`).then(response => {
-    if (response.ok) {
-      return response.json();
+    if (!response.ok) {
+        throw new Error (response.status);
     }
-    throw new Error(response.status);
+    // console.log(response);
+     return response.json();
   });
 };
 
-// HTTP-запросы
-// Используй публичный API Rest Countries, а именно ресурс name, возвращающий массив объектов стран
-// удовлетворивших критерий поиска. Добавь минимальное оформление элементов интерфейса.
-
-// Напиши функцию fetchCountries(name) которая делает HTTP-запрос на ресурс name и возвращает промис с
-// массивом стран - результатом запроса. Вынеси её в отдельный файл fetchCountries.js и сделай именованный
-// экспорт.
 // Фильтрация полей
 // В ответе от бэкенда возвращаются объекты, большая часть свойств которых тебе не пригодится. Чтобы сократить объем передаваемых
 // данных добавь строку параметров запроса - так этот бэкенд реализует фильтрацию полей. Ознакомься с документацией синтаксиса фильтров.
