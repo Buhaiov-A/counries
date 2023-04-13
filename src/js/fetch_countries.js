@@ -6,11 +6,10 @@ const searchParams = new URLSearchParams({
 
 export const fetchCountries = name => {
   return fetch(`${SEARCH_URL}${name}?${searchParams}`).then(response => {
-    if (!response.ok) {
-      throw new Error(response.status);
+    if (response.ok) {
+      return response.json();
     }
-    // console.log(response);
-    return response.json();
+    throw new Error(response.status);
   });
 };
 
