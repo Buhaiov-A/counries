@@ -1,5 +1,6 @@
 import './css/styles.css';
 import debounce from 'lodash.debounce';
+import Notiflix from 'notiflix';
 import { fetchCountries } from './js/fetch_countries';
 
 const DEBOUNCE_DELAY = 1000;
@@ -10,16 +11,18 @@ const refs = {
 
 function searchCountries() {
   const value = refs.input.value;
-  fetchCountries(value.trim()).then(response => console.log(response));
+  fetchCountries(value.trim())
+    .then(response => {
+      if (response.length > 10) {
+        Notiflix.Notify.info(
+          'Too many matches found. Please enter a more specific name.'
+        );
+      }
+    })
+    .catch(error => console.log('ERROR'));
 }
 
 refs.input.addEventListener('input', debounce(searchCountries, DEBOUNCE_DELAY));
-
-const SEARCH_URL = 'https://restcountries.com/v3.1/name/';
-
-const searchParams = new URLSearchParams({
-  fields: ['name', 'capital', 'population', 'flag', 'languages'],
-});
 
 // HTTP-запросы
 // Используй публичный API Rest Countries, а именно ресурс name, возвращающий массив объектов стран
