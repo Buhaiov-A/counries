@@ -21,15 +21,6 @@ const searchParams = new URLSearchParams({
   fields: ['name', 'capital', 'population', 'flag', 'languages'],
 });
 
-export const fetchCountries = name => {
-  return fetch(`${SEARCH_URL}${name}?${searchParams}`).then(response => {
-    if (!response.ok) {
-      throw new Error(response.status);
-    }
-    return response.json();
-  });
-};
-
 // HTTP-запросы
 // Используй публичный API Rest Countries, а именно ресурс name, возвращающий массив объектов стран
 // удовлетворивших критерий поиска. Добавь минимальное оформление элементов интерфейса.
