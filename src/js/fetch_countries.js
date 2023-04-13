@@ -1,20 +1,3 @@
-import './css/styles.css';
-import debounce from 'lodash.debounce';
-import { fetchCountries } from './js/fetch_countries';
-
-const DEBOUNCE_DELAY = 1000;
-
-const refs = {
-  input: document.querySelector('input'),
-};
-
-function searchCountries() {
-  const value = refs.input.value;
-  fetchCountries(value.trim()).then(response => console.log(response));
-}
-
-refs.input.addEventListener('input', debounce(searchCountries, DEBOUNCE_DELAY));
-
 const SEARCH_URL = 'https://restcountries.com/v3.1/name/';
 
 const searchParams = new URLSearchParams({
@@ -26,6 +9,7 @@ export const fetchCountries = name => {
     if (!response.ok) {
       throw new Error(response.status);
     }
+    // console.log(response);
     return response.json();
   });
 };
